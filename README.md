@@ -1,2 +1,2 @@
 # RRWWW.github.io
-GitHub Page
+GitHub Pages

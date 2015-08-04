@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    </head>
+    <body>
+        <p id='playground4'></p>
+        <p id='b'></p>
+        <script>
+            var row = 3;
+            var col = 3;
+            var a = new Array();
+            for(i=0;i< row ;i++){
+                a[i] = new Array();
+                for(j=0;j< col ;j++){
+                    a[i][j] = 0
+                }
+            }
+            r();
+            
+            function r(){ //recursion(necessary for 2nd generation of tag) for restart, faster than reload
+                var b = "";
+                for(i=0;i<a.length;i++){
+                    for(j=0;j<a[i].length;j++){
+                        b += "<span class='pce' id='" + i + "," + j + "'>" + a[i][j] + "</span>" + "&nbsp" + "&nbsp" + "&nbsp";
+                    }
+                    b += "<br>";
+                }
+                document.getElementById('playground4').innerHTML = b;
+    
+                //$(document).ready(function(){//
+                    $('span.pce').click(function(){
+                        var Z = 0;
+                        for(i=0;i<a.length;i++){
+                            for(j=0;j<a[i].length;j++){
+                                Z += a[i][j];
+                            }
+                        }
+                        var ix = this.getAttribute("id");
+                        var m = ix.split(",")[0];
+                        var n = ix.split(",")[1];
+                        if(a[m][n] == 0){
+                            if(Z == 0){
+                                a[m][n] = 1;
+                            }else{ // Z == -1//
+                                a[m][n] = -1;
+                            }
+                            document.getElementById(ix).innerHTML = a[m][n];
+                            /* auto click
+                            var ixrl = String((Number(i)+1) + "," + (Number(j)+1));
+                            console.log(ixrl);
+                            document.getElementById(ixrl).click();
+                            */
+                        }
+                        
+                        var p = 1;
+                        for(i=0;i<a.length;i++){
+                            for(j=0;j<a[i].length;j++){
+                                p *= a[i][j];
+                                if(p == 0){
+                                    break
+                                }
+                            }
+                        }
+                        r();
+                        document.getElementById('b').innerHTML = b;
+                        if(p != 0){
+                            /* reload webpage to restart
+                            location.reload(true)
+                            */
+                            r();
+                            document.getElementById('b').innerHTML = b; //record the last result, and then return to 0 and recursion restart
+                            for(i=0;i< row ;i++){
+                                for(j=0;j< col ;j++){
+                                    a[i][j] = 0
+                                }
+                            }
+                            r();
+                        }
+                    })
+                //})
+            }
+        </script>
+        
+        <script>
+            var test = 9;
+            var k = 0;
+            recur0();
+            function recur0(){
+                var sp0 = document.createElement('span');
+                sp0.setAttribute("id",k);
+                sp0.setAttribute("class","sp");
+                document.body.appendChild(sp0);
+                sp0.innerHTML = k + " ";
+            
+                recur1();
+                function recur1(){
+                    $('span.sp').click(function(){
+                        //$('span.sp').remove();
+                        //var l = 0;
+                        var sp = document.createElement('span'); console.log(k);
+                        //l += 1;
+                        k += 1;
+                        sp.setAttribute("id",k);
+                        sp.setAttribute("class","sp");
+                        document.body.appendChild(sp);
+                        if(k%30==0){
+                            sp.innerHTML = Math.pow(k,1) + "<br>";
+                        }else{
+                            sp.innerHTML = Math.pow(k,1) + " ";
+                        }
+                        /*if(l == 0){
+                            recur1();
+                        }*/
+                        if(k>test){
+                            k = 0;
+                            $('span.sp').remove();
+                            recur0();
+                        }
+                    })
+                    
+                }
+            }
+        </script>
+        
+        <!-- discovery of recursion(necessary for 2nd generation of tag) for restart, faster than reload
+        <p id='restart'></p>
+        <script>
+            /*var row = 1;
+            var col = 2;
+            var a = new Array();
+            for(i=0;i< row ;i++){
+                a[i] = new Array();
+                for(j=0;j< col ;j++){
+                    a[i][j] = 0
+                }
+            }
+            console.log(a);*/
+            //var b;
+            /*for(i=0;i<a.length;i++){
+                for(j=0;j<a[i].length;j++){
+                    b += "<span class='pce' id='" + i + "," + j + "'>" + 0 + "</span>" + "&nbsp" + "&nbsp" + "&nbsp";
+                }*/
+            //var b /*+*/= "<br>" + "<div>1</div>";
+            //}
+            document.getElementById("restart").innerHTML = "<div>1</div>"; //console.log(b);
+            function f(){
+                n = 0;
+                document.getElementById("restart").innerHTML = "<div>1</div>" /*+ "<span class='pce' id='0,2'>" + 0 + "</span>"*/;
+                console.log(document.getElementById("restart").innerHTML);
+                //console.log(b);
+                //console.log(a);
+                $('div').click(function(){
+                    this.innerHTML = n;
+                    n += 1;
+                    var inp = this.innerHTML;
+                    if(inp == 3){
+                        f()
+                    }
+                })
+            }
+            var n = 0;
+            /*$('span.pce').click(function(){
+                var ix = this.getAttribute("id");
+                document.getElementById(ix).innerHTML = n;
+                n += 1;
+                var inp = document.getElementById(ix).innerHTML;
+                if(inp == 3){
+                    f()
+                }
+            })*/
+            $('div').click(function(){
+                this.innerHTML = n;
+                n += 1;
+                var inp = this.innerHTML;
+                if(inp == 3){
+                    f()
+                }
+            })
+        </script>
+        -->
+        
+        <!--
+        <p id="playground"></p>
+        <script>
+            var a = new Array();
+            for (i=0;i<3;i++) {
+                a[i] = new Array();
+                for (j=0;j<3;j++) {
+                    a[i][j] = 0
+                }
+            }
+            var b = "";
+            for (i=0;i<a.length;i++) {
+                for (j=0;j<a[i].length;j++) {
+                    b += a[i][j] + "&nbsp" + "&nbsp" + "&nbsp";
+                }
+                b += "<br>";
+            }
+            document.getElementById("playground").innerHTML = b; 
+        </script>
+        
+        <p id="playground2"></p>
+        <script>
+            var a = new Array();
+            for (i=0;i<3;i++) {
+                a[i] = new Array();
+                for (j=0;j<3;j++) {
+                    a[i][j] = 0
+                }
+            }
+            var b = "";
+            var c = 1;
+            function f(e) {
+                e.innerHTML = c;
+                c *= -1;
+            }
+            for (i=0;i<a.length;i++) {
+                for (j=0;j<a[i].length;j++) {
+                    b += "<span onclick='f(this)'>" + a[i][j] + "</span>" + "&nbsp" + "&nbsp" + "&nbsp";
+                }
+                b += "<br>";
+            }
+            document.getElementById("playground2").innerHTML = b;
+        </script>
+        
+        <p id="playground3"></p>
+        <script>
+            var a = new Array();
+            for (i=0;i<3;i++) {
+                a[i] = new Array();
+                for (j=0;j<3;j++) {
+                    a[i][j] = 0
+                }
+            }
+            var b = "";
+            var c = 1;
+            var d = "";
+            function g(e) {
+                if (c==1) {
+                    d = "O"
+                } else {
+                    d = "X"
+                }
+                e.innerHTML = d;
+                c *= -1;
+            }
+            for (i=0;i<a.length;i++) {
+                
+                for (j=0;j<a[i].length;j++) {
+                    b += "<span onclick='g(this)'>" + a[i][j] + "</span>" + "&nbsp" + "&nbsp" + "&nbsp";
+                }
+                
+                b += "<br>";
+            }
+            document.getElementById("playground3").innerHTML = b;
+        </script>
+        -->
+    </body>
+</html>
